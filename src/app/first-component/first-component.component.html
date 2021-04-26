@@ -1,1 +1,10 @@
 <app-watch></app-watch>
+
+<label>Enter your name</label>
+<input type="text" [(ngModel)]="userName" style="margin-left: 5px"/>
+<button  style="margin-left: 5px" (click)="nameConfirmed()">Confirm</button>
+
+
+<br />
+<br />
+<button (click)="sendRequest()" style="margin-left: 5px">Send a request</button>

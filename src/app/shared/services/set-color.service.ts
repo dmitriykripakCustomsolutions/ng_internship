@@ -6,11 +6,11 @@ export class SetColorService{
 
     constructor(){}
 
-    public setColor(value: string){
+    public setColor(value: string) {
         this.currentColor = value;
     }
 
-    public get color(): string{
+    public get color(): string {
         return this.currentColor;
     }
 
