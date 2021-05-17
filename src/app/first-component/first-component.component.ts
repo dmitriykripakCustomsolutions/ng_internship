@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-first-component',
@@ -7,9 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FirstComponentComponent implements OnInit {
 
-  constructor() { }
+  public userName: string;
+
+  constructor(private httpClient: HttpClient) { }
 
   ngOnInit() {
+  }
+
+  public nameConfirmed() {
+    if (this.userName) {
+      localStorage.setItem('userName', this.userName);
+    }
+  }
+
+  public sendRequest() {
+    this.httpClient.get<any>('https://jsonplaceholder.typicode.com/posts').subscribe(result => {
+      console.table(result);
+    });
   }
 
 }
