@@ -1,10 +1,64 @@
 <app-watch></app-watch>
 
-<label>Enter your name</label>
-<input type="text" [(ngModel)]="userName" style="margin-left: 5px"/>
-<button  style="margin-left: 5px" (click)="nameConfirmed()">Confirm</button>
+<form class="promotion-form" [formGroup]="promotionApplicationFrom" (submit)="onSubmit()">
+  <h2>Promotion Application Form</h2>
 
+  <label>
+    First Name:
+    <input type="text" formControlName="firstName" />
+    <ng-container *ngIf="isControlInvalid('firstName')">
+      <small class="error" *ngIf="isErrorExist('firstName', 'invalidValue')">A 'First Name' shouldn't be 'COM9'</small>
+    </ng-container>
+  </label>
 
-<br />
-<br />
-<button (click)="sendRequest()" style="margin-left: 5px">Send a request</button>
+  <label>
+    Last Name:
+    <input type="text" formControlName="lastName" />
+    <small class="error" *ngIf="isControlInvalid('lastName')">A 'Last Name' value is required</small>
+  </label>
+
+  <div formGroupName="address">
+    <label>
+      City:
+      <input type="text" formControlName="city" />
+      <small class="error" *ngIf="isControlInvalid('address.city')">A 'City' value is required</small>
+    </label>
+
+    <label>
+      District:
+      <input type="text" formControlName="district" />
+      <small class="error" *ngIf="isControlInvalid('address.district')">A 'District' value is required</small>
+    </label>
+
+    <label>
+      ZipCode:
+      <input type="text" formControlName="zipCode" />
+      <small class="error" *ngIf="isControlInvalid('address.zipCode')">A 'ZipCode' value is required</small>
+    </label>
+
+  </div>
+
+  
+
+  <label>
+    Position:
+    <input type="text" formControlName="position" />
+    <small class="error" *ngIf="isControlInvalid('position')">A 'Position' value is required</small>
+  </label>
+
+  <label>
+    Salary:
+    <input type="number" formControlName="salary" />
+    <small class="error" *ngIf="isControlInvalid('salary')">A 'Salary' value is required</small>
+  </label>
+
+  <label>
+    Reason:
+    <textarea type="text" formControlName="reason"></textarea>
+    <small class="error" *ngIf="isControlInvalid('reason')">A 'Reason' value is required</small>
+  </label>
+
+  <button type="submit" [disabled]="!promotionApplicationFrom.valid">Submit</button>
+
+  <button type="button" (click)="clearData()">Clear data</button>
+</form>
