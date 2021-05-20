@@ -38,7 +38,7 @@
 
   </div>
 
-  
+
 
   <label>
     Position:
@@ -52,12 +52,19 @@
     <small class="error" *ngIf="isControlInvalid('salary')">A 'Salary' value is required</small>
   </label>
 
-  <label>
-    Reason:
-    <textarea type="text" formControlName="reason"></textarea>
-    <small class="error" *ngIf="isControlInvalid('reason')">A 'Reason' value is required</small>
-  </label>
+  <ng-container formArrayName="reason">
 
+    Reason:
+    <button type="button" (click)="addReason()">Add Reason</button>
+    <div *ngFor="let reasonControl of reasons.controls; index as i">
+      <textarea type="text" [formControlName]="i"></textarea>
+      <!--<small class="error" *ngIf="isControlInvalid('reason')">A 'Reason' value is required</small>-->
+    </div>
+  </ng-container>
+
+  <br />
+  <br />
+  <br />
   <button type="submit" [disabled]="!promotionApplicationFrom.valid">Submit</button>
 
   <button type="button" (click)="clearData()">Clear data</button>

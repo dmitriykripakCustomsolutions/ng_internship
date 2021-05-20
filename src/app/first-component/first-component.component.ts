@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, FormControl, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -31,15 +31,27 @@ export class FirstComponentComponent implements OnInit {
       }),
       position: ['', Validators.required],
       salary: ['', Validators.required],
-      reason: ['', Validators.required]
+      reason: new FormArray([])
     }
     );
+  }
+
+  public get reasons(): FormArray {
+    return this.promotionApplicationFrom.get('reason') as FormArray;
+  }
+
+  addReason() {
+    let control = new FormControl('', [Validators.required]);
+    this.reasons.push(control);
   }
 
   private populateForm() {
     this.promotionApplication = JSON.parse(localStorage.getItem('promotionApplication'));
 
     if (this.promotionApplication) {
+      this.promotionApplication.reason.forEach(reason => {
+        this.addReason();
+      });
       this.promotionApplicationFrom.setValue(this.promotionApplication);
     } 
   }
@@ -88,7 +100,7 @@ export class PromotionApplication {
   address: OfficeAddress;
   position: string;
   salary: number;
-  reason: string;
+  reason: Array<string>;
 }
 
 export class OfficeAddress {
